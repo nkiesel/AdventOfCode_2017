@@ -44,6 +44,18 @@ enum class Direction {
             '<' -> W
             else -> error("Char '$char' cannot be converted to a Direction")
         }
+        fun from(d: String) = when (d.lowercase()) {
+            "n" -> N
+            "ne" -> NE
+            "e" -> E
+            "se" -> SE
+            "s" -> S
+            "sw" -> SW
+            "w" -> W
+            "nw" -> NW
+            else -> error("Unexpected direction $d")
+
+        }
     }
 }
 

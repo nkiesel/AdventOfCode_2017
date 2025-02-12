@@ -10,34 +10,33 @@ class Day08 {
         c inc -20 if c == 10
     """.trimIndent().lines()
 
-    private fun parse(input: List<String>) = input.map { it.split(" ") }
-
     private fun one(input: List<String>) = three(input, Part.ONE)
 
     private fun two(input: List<String>) = three(input, Part.TWO)
 
     private fun three(input: List<String>, part: Part): Long {
         val regs = CountingMap<String>()
-        var max = 0L
-        parse(input).forEach { i ->
+        var everMax = Long.MIN_VALUE
+        input.map { it.split(" ") }.forEach { i ->
             val a = regs.count(i[4])
             val b = i[6].toLong()
-            val e = when (i[5]) {
+            val e = when (val o = i[5]) {
                 ">" -> a > b
                 "<" -> a < b
                 ">=" -> a >= b
                 "<=" -> a <= b
                 "==" -> a == b
                 "!=" -> a != b
-                else -> error("invalid op ${i[5]}")
+                else -> error("invalid op $o")
             }
             if (e) {
+                val k = i[0]
                 val d = i[2].toLong()
-                regs.inc(i[0], if (i[1] == "inc") d else -d)
-                max = max(max, regs.values().max())
+                regs.inc(k, if (i[1] == "inc") d else -d)
+                if (part == Part.TWO) everMax = max(everMax, regs.count(k))
             }
         }
-        return if (part == Part.ONE) regs.values().max() else max
+        return if (part == Part.ONE) regs.values().max() else everMax
     }
 
     @Test
