@@ -41,11 +41,9 @@ class Day14 {
     private fun two(input: List<String>): Int {
         val area = CharArea(parse(input))
         var regions = 0
-        area.tiles().forEach { p ->
-            if (area[p] == '1') {
-                regions++
-                bfs(p) { area.neighbors4(it, '1') }.forEach { area[it.value] = '0' }
-            }
+        area.tiles { it == '1' }.forEach { p ->
+            regions++
+            bfs(p) { area.neighbors4(it, '1') }.forEach { area[it.value] = '0' }
         }
         return regions
     }
