@@ -12,7 +12,7 @@ class Day21 {
         .#.
         ..#
         ###
-    """.trimIndent().lines().joinToString("")
+    """.trimIndent().lines()
 
     private fun parse(input: List<String>): List<Map<Int, List<String>>> {
         val m9 = mutableMapOf<Int, List<String>>()
@@ -45,7 +45,7 @@ class Day21 {
 
     private fun one(input: List<String>, rep: Int): Int {
         val (m4, m9) = parse(input)
-        var area = start.replace("#", "1").replace(".", "0")
+        var area = start.joinToString("").replace("#", "1").replace(".", "0")
         repeat(rep) { r ->
             val (a, b) = if (area.length % 2 == 0) listOf(4, 2) else listOf(9, 3)
             val m = if (a == 4) m4 else m9
